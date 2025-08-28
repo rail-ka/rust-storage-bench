@@ -12,6 +12,7 @@ use std::{
     time::Instant,
 };
 
+#[allow(clippy::large_enum_variant)]
 #[derive(Clone)]
 pub enum GenericDatabase {
     Fjall {
@@ -508,17 +509,17 @@ impl DatabaseWrapper {
     }
 
     pub fn fragmented_bytes(&self) -> usize {
-        match &self.inner {
-            // TODO: expensive?!
-            /* GenericDatabase::Redb(db) => {
-                use redb::ReadableTableMetadata;
-
-                let tx = db.begin_read().unwrap();
-                let table = tx.open_table(TABLE).unwrap();
-                table.stats().unwrap().fragmented_bytes() as usize
-            } */
-            _ => 0,
-        }
+        // TODO: expensive?!
+        // match &self.inner {
+        // GenericDatabase::Redb(db) => {
+        //     use redb::ReadableTableMetadata;
+        //     let tx = db.begin_read().unwrap();
+        //     let table = tx.open_table(TABLE).unwrap();
+        //     table.stats().unwrap().fragmented_bytes() as usize
+        // }
+        //     _ => 0,
+        // }
+        0
     }
 
     pub fn tree_height(&self) -> usize {
@@ -1007,7 +1008,9 @@ impl DatabaseWrapper {
 
                 let mut write_txn = db.begin_write().unwrap();
 
-                write_txn.set_durability(if durable { Immediate } else { None });
+                write_txn
+                    .set_durability(if durable { Immediate } else { None })
+                    .unwrap();
 
                 {
                     let mut table = write_txn.open_table(TABLE).unwrap();
@@ -1141,7 +1144,9 @@ impl DatabaseWrapper {
 
                 let mut write_txn = db.begin_write().unwrap();
 
-                write_txn.set_durability(if durable { Immediate } else { None });
+                write_txn
+                    .set_durability(if durable { Immediate } else { None })
+                    .unwrap();
 
                 {
                     let mut table = write_txn.open_table(TABLE).unwrap();

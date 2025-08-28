@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 mod args;
 mod corpus;
 mod db;

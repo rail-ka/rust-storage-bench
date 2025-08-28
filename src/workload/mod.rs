@@ -1,3 +1,4 @@
+#![allow(deprecated)]
 // mod feed;
 // mod monotonic;
 // mod monotonic_fixed;

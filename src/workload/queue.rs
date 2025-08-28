@@ -1,3 +1,4 @@
+#![allow(unused_assignments)]
 use super::start_killer;
 use crate::{
     args::{CommonRunOptions, QueueOptions},
