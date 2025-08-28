@@ -83,9 +83,9 @@ pub fn main() -> std::io::Result<()> {
         args::Commands::Run(mut cmd) => {
             let args = &mut cmd.args;
 
-            if args.fsync && args.backend == Backend::Sled {
-                panic!("Sled does not support proper synchronous writes: https://github.com/spacejam/sled/issues/1351");
-            }
+            // if args.fsync && args.backend == Backend::Sled {
+            //     panic!("Sled does not support proper synchronous writes: https://github.com/spacejam/sled/issues/1351");
+            // }
 
             if args.display_name.is_none() {
                 args.display_name = Some(args.backend.to_string());
