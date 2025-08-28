@@ -3,10 +3,7 @@ use crate::{
     args::{CommonRunOptions, QueueOptions},
     db::DatabaseWrapper,
 };
-use std::sync::{
-    atomic::{AtomicBool, AtomicU64, Ordering},
-    Arc,
-};
+use std::sync::{atomic::AtomicBool, Arc};
 
 pub fn run(
     common_args: &CommonRunOptions,

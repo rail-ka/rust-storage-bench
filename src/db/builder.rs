@@ -109,7 +109,7 @@ impl DatabaseBuilder {
             Backend::Sled => GenericDatabase::Sled(
                 sled::Config::new()
                     .path(path)
-                    .cache_capacity(args.cache_size)
+                    .cache_capacity_bytes(args.cache_size as usize)
                     .open()
                     .unwrap(),
             ),

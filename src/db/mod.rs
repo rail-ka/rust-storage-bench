@@ -4,6 +4,7 @@ mod builder;
 pub use backend::Backend;
 pub use builder::DatabaseBuilder;
 use builder::TABLE;
+use redb::ReadableDatabase;
 use sketches_ddsketch::DDSketch;
 use std::{
     ops::Bound,
@@ -17,30 +18,9 @@ pub enum GenericDatabase {
         keyspace: fjall::TxKeyspace,
         db: fjall::TxPartition,
     },
-
-    #[cfg(feature = "localfjall")]
-    LocalFjall {
-        keyspace: local_fjall::TxKeyspace,
-        db: local_fjall::TxPartition,
-    },
-
     Sled(sled::Db),
-
     Redb(Arc<redb::Database>),
-
     Canopydb(Arc<canopydb::Database>),
-
-    #[cfg(feature = "heed")]
-    Heed {
-        db: heed::Database<heed::types::Bytes, heed::types::Bytes>,
-        env: heed::Env,
-    },
-
-    #[cfg(feature = "rocksdb")]
-    RocksDb(Arc<rocksdb::OptimisticTransactionDB>),
-
-    #[cfg(feature = "sqlite")]
-    Sqlite(Arc<Mutex<rusqlite::Connection>>),
 }
 
 #[derive(Clone)]
@@ -580,12 +560,10 @@ impl DatabaseWrapper {
 
     pub fn bloom_filter_size(&self) -> usize {
         match &self.inner {
-            GenericDatabase::Fjall { db, .. } => {
-                use fjall::AbstractTree;
-
-                db.inner().tree.bloom_filter_size()
-            }
-
+            // GenericDatabase::Fjall { db, .. } => {
+            //     use fjall::AbstractTree;
+            //     db.inner().tree.bloom_filter_size()
+            // }
             #[cfg(feature = "localfjall")]
             GenericDatabase::LocalFjall { db, .. } => {
                 use local_fjall::AbstractTree;
@@ -599,12 +577,10 @@ impl DatabaseWrapper {
 
     pub fn l0_runs(&self) -> usize {
         match &self.inner {
-            GenericDatabase::Fjall { db, .. } => {
-                use fjall::AbstractTree;
-
-                db.inner().tree.l0_run_count()
-            }
-
+            // GenericDatabase::Fjall { db, .. } => {
+            //     use fjall::AbstractTree;
+            //     db.inner().tree.l0_run_count()
+            // }
             #[cfg(feature = "localfjall")]
             GenericDatabase::LocalFjall { db, .. } => {
                 use local_fjall::AbstractTree;
@@ -685,11 +661,10 @@ impl DatabaseWrapper {
 
     pub fn blob_file_count(&self) -> usize {
         match &self.inner {
-            GenericDatabase::Fjall { db, .. } => {
-                use fjall::AbstractTree;
-
-                db.inner().tree.blob_file_count()
-            }
+            // GenericDatabase::Fjall { db, .. } => {
+            //     use fjall::AbstractTree;
+            //     db.inner().tree.blob_file_count()
+            // }
             #[cfg(feature = "localfjall")]
             GenericDatabase::LocalFjall { db, .. } => {
                 use local_fjall::AbstractTree;
@@ -702,12 +677,10 @@ impl DatabaseWrapper {
 
     pub fn disk_segment_count(&self) -> usize {
         match &self.inner {
-            GenericDatabase::Fjall { db, .. } => {
-                use fjall::AbstractTree;
-
-                db.inner().tree.segment_count()
-            }
-
+            // GenericDatabase::Fjall { db, .. } => {
+            //     use fjall::AbstractTree;
+            //     db.inner().tree.segment_count()
+            // }
             #[cfg(feature = "localfjall")]
             GenericDatabase::LocalFjall { db, .. } => {
                 use local_fjall::AbstractTree;
@@ -1030,11 +1003,11 @@ impl DatabaseWrapper {
                 }
             }
             GenericDatabase::Redb(db) => {
-                use redb::Durability::{Eventual, Immediate};
+                use redb::Durability::{Immediate, None};
 
                 let mut write_txn = db.begin_write().unwrap();
 
-                write_txn.set_durability(if durable { Immediate } else { Eventual });
+                write_txn.set_durability(if durable { Immediate } else { None });
 
                 {
                     let mut table = write_txn.open_table(TABLE).unwrap();
@@ -1164,11 +1137,11 @@ impl DatabaseWrapper {
                 }
             }
             GenericDatabase::Redb(db) => {
-                use redb::Durability::{Eventual, Immediate};
+                use redb::Durability::{Immediate, None};
 
                 let mut write_txn = db.begin_write().unwrap();
 
-                write_txn.set_durability(if durable { Immediate } else { Eventual });
+                write_txn.set_durability(if durable { Immediate } else { None });
 
                 {
                     let mut table = write_txn.open_table(TABLE).unwrap();
