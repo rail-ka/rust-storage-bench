@@ -6,7 +6,7 @@ mod workload;
 
 use args::Args;
 use clap::Parser;
-use db::{Backend, DatabaseBuilder};
+use db::DatabaseBuilder;
 use monitor::start_monitor;
 use std::io::Write;
 use std::sync::atomic::AtomicBool;

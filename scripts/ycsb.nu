@@ -26,7 +26,7 @@ for task in ["a", "b", "c"] {
     let prefix = [$prefix, $task, (($ks | into string) + "K")] | str join "_";
 
     for db in [
-        "fjall", "redb", "sled"
+        "fjall", "redb", "sled", "canopydb"
     ] {
         let out = $prefix + "_" + $db + ".jsonl";
         print $out;

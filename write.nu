@@ -8,7 +8,7 @@ let value_size = 96;
 
 alias bench = cargo run -r --
 
-for db in ["rocksdb", "heed", "fjall"] {
+for db in ["canopydb", "sled", "fjall"] {
     let out = $"($prefix)_($db).jsonl";
     print $out;
     RUST_BACKTRACE=full RUST_LOG=warn bench run --seconds $seconds --out $out --workload random-write --value-size $value_size --backend $db --data-dir $data_dir --item-count 100 --cache-size $cache

@@ -7,7 +7,7 @@ let cache_mib = 1000 * 1_024 * 1_024;
 
 alias bench = cargo run -r --
 
-for db in ["fjall", "redb", "sled"] {
+for db in ["fjall", "redb", "sled", "canopydb"] {
     let out = $"($prefix)_($db).jsonl";
     print $out;
     bench run --fsync --seconds $seconds --out $out --workload random-write --value-size (32 * 1_024) --backend $db --data-dir $data_dir --item-count 10000 --cache-size $cache_mib

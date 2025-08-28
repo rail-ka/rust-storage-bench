@@ -12,7 +12,7 @@ alias bench = cargo run -r --
 
 let cache = $cache_mib * 1_024 * 1_024;
 
-for db in ["fjall", "sled", "rocksdb"] {
+for db in ["fjall", "sled", "canopydb"] {
     let out = $"($prefix)_($db).jsonl";
     print $out;
     RUST_LOG=info bench run --seconds $seconds --out $out --workload feed --value-size $tweet_size_bytes --backend $db --data-dir $data_dir --cache-size $cache

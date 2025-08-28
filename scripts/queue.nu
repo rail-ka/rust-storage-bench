@@ -18,7 +18,7 @@ alias bench = cargo run -r --
 
 let cache = $cache_mib * 1_024 * 1_024
 
-for db in ["fjall", "redb", "sled"] {
+for db in ["fjall", "redb", "sled", "canopydb"] {
     let out = $"($prefix)_($db).jsonl";
     print $out;
     RUST_BACKTRACE=full RUST_LOG=warn bench run --seconds $seconds --out $out --backend $db --data-dir $data_dir --cache-size $cache queue --backpressure --value-size $value_size

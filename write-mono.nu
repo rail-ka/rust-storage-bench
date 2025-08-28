@@ -8,7 +8,7 @@ let value_size = 16;
 
 alias bench = cargo run --
 
-for db in ["fjall", "local-fjall", "rocksdb", "sled"] {
+for db in ["fjall", "sled", "canopydb"] {
     let out = $"($prefix)_($db).jsonl";
     print $out;
     RUST_LOG=warn bench run --seconds $seconds --out $out --workload monotonic-write --value-size $value_size --backend $db --data-dir $data_dir --item-count 1 --cache-size $cache_mib

@@ -9,7 +9,7 @@ let item_count = 0;
 
 alias bench = cargo run -r --
 
-for db in ["local-fjall", "fjall"] {
+for db in ["sled", "fjall", "canopydb"] {
     let out = $"($prefix)_($db).jsonl";
     print $out;
     RUST_BACKTRACE=full RUST_LOG=warn bench run --seconds $seconds --out $out --workload monotonic --value-size $value_size --backend $db --data-dir $data_dir --item-count $item_count --cache-size $cache_mib
