@@ -8,13 +8,13 @@ debug = false
 
 [features]
 default = ["jemalloc"]
-heed = ["dep:heed"]
 jemalloc = ["dep:jemallocator"]
-localfjall = []
 mimalloc = ["dep:mimalloc"]
+tcmalloc = ["dep:tcmalloc"]
+heed = ["dep:heed"]
+localfjall = []
 rocksdb = ["dep:rocksdb"]
 sqlite = ["dep:rusqlite"]
-tcmalloc = ["dep:tcmalloc"]
 
 [target.'cfg(not(target_env = "msvc"))'.dependencies]
 jemallocator = { version = "0.5.4", optional = true }
