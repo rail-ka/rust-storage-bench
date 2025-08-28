@@ -33,7 +33,7 @@ for task in $tasks {
     let prefix = [$prefix, $task, (($ks | into string) + "K")] | str join "_";
 
     for db in [
-        "fjall", "redb", "sled", "canopydb"
+        "fjall", "sled", "canopydb"
     ] {
         let out = $prefix + "_" + $db + ".jsonl";
         print $out;
