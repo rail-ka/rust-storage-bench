@@ -21,8 +21,10 @@ let cache = $cache_mib * 1_024 * 1_024
 
 let ks = $db_size / 1000;
 
+let tasks = $env.args | default ["a", "b", "c"]
+
 # ycsb task list
-for task in ["a", "b", "c"] {
+for task in $tasks {
     let prefix = [$prefix, $task, (($ks | into string) + "K")] | str join "_";
 
     for db in [
@@ -34,10 +36,10 @@ for task in ["a", "b", "c"] {
         sleep 100ms
     }
 
-    # Generate report for the workload
+    # Print report name for the workload
     let report_file = ("report_" + $prefix + ".html")
     print $report_file;
 
-    bench report --out $report_file (($prefix + "_*.jsonl") | into glob)
-    google-chrome $report_file
+    # bench report --out $report_file (($prefix + "_*.jsonl") | into glob)
+    # google-chrome $report_file
 }

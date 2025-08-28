@@ -25,9 +25,9 @@ for db in ["fjall", "redb", "sled", "canopydb"] {
     sleep 500ms
 }
 
-# Generate report for the workload
+# Print report name for the workload
 let report_file = $"report_($prefix)($value_size).html";
 print $report_file;
 
-bench report --out $report_file ($"($prefix)_*.jsonl" | into glob);
-google-chrome $report_file
+# bench report --out $report_file ($"($prefix)_*.jsonl" | into glob);
+# google-chrome $report_file

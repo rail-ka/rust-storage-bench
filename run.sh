@@ -18,17 +18,17 @@ for vsize in 512; do
     done
 done
 
-for vsize in 20000; do
-    for db in fjall canopydb sled redb; do
-        cargo run --release -- --out task_h_large_rand_${db}_${vsize}v.jsonl --workload task-h --backend ${db} --minutes ${minutes} --value-size ${vsize} --items 150000 --random
+for vsize in 512; do
+    for db in canopydb fjall sled; do
+        cargo run --release -- --out task_h_large_rand_${db}_${vsize}v.jsonl --workload task-h --backend ${db} --minutes ${minutes} --value-size ${vsize} --items 5000000 --random
         rm -rf .data
         sleep ${sleep}
     done
 done
 
-for vsize in 512; do
-    for db in canopydb fjall sled; do
-        cargo run --release -- --out task_h_large_rand_${db}_${vsize}v.jsonl --workload task-h --backend ${db} --minutes ${minutes} --value-size ${vsize} --items 5000000 --random
+for vsize in 20000; do
+    for db in fjall canopydb sled redb; do
+        cargo run --release -- --out task_h_large_rand_${db}_${vsize}v.jsonl --workload task-h --backend ${db} --minutes ${minutes} --value-size ${vsize} --items 150000 --random
         rm -rf .data
         sleep ${sleep}
     done
