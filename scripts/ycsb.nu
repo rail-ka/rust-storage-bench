@@ -1,4 +1,4 @@
-#!/bin/nu
+#!/usr/bin/env nu
 
 #
 # CONFIG
@@ -18,10 +18,15 @@ let db_size = 1_000_000
 alias bench = cargo run -r --
 
 let cache = $cache_mib * 1_024 * 1_024
-
 let ks = $db_size / 1000;
 
-let tasks = $env.args | default ["a", "b", "c"]
+export def main [...tasks: string] {
+
+let tasks = if ($tasks | is-empty) {
+    ["a", "b", "c"]
+} else {
+    $tasks
+}
 
 # ycsb task list
 for task in $tasks {
@@ -42,4 +47,6 @@ for task in $tasks {
 
     # bench report --out $report_file (($prefix + "_*.jsonl") | into glob)
     # google-chrome $report_file
+}
+
 }
