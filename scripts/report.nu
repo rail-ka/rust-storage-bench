@@ -19,6 +19,7 @@ export def main [...tasks: string] {
     }
 
     for task in $tasks {
+        rm -rf .data
         let prefix = [$prefix, $task, (($ks | into string) + "K")] | str join "_";
 
         # Generate report for the workload
