@@ -8,7 +8,7 @@ let prefix = "queue";
 let data_dir = ".data";
 let seconds = 1 * 60;
 let cache_mib = 16;
-let value_size = 128;
+let value_size = 512;
 
 #
 # BENCH

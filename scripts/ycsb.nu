@@ -6,9 +6,9 @@
 
 let prefix = "ycsb"
 let data_dir = ".data"
-let seconds = 1 * 15
+let seconds = 1 * 60
 let cache_mib = 1
-let value_size = 128
+let value_size = 512
 let db_size = 1_000_000
 
 #

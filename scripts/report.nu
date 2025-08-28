@@ -26,7 +26,7 @@ export def main [...tasks: string] {
         print $report_file;
 
         bench report --out $report_file (($prefix + "_*.jsonl") | into glob)
-        google-chrome $report_file
+        # google-chrome $report_file
     }
 
     let prefix = "queue"
@@ -34,5 +34,5 @@ export def main [...tasks: string] {
     let report_file = $"report_($prefix)($value_size).html";
     print $report_file;
     bench report --out $report_file ($"($prefix)_*.jsonl" | into glob);
-    google-chrome $report_file
+    # google-chrome $report_file
 }
